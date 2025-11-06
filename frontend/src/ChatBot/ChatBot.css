@@ -1,0 +1,9 @@
+.chatBot {
+    position: absolute;
+    right: 10px;
+    bottom: 90px;
+    width: 300px;
+    height: 400px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
