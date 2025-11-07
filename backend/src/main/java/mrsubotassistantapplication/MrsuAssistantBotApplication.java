@@ -1,13 +1,12 @@
-package ru.maxowteam.backend;
+package mrsubotassistantapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class MrsuAssistantBotApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(BackendApplication.class, args);
+    SpringApplication.run(MrsuAssistantBotApplication.class, args);
   }
-
 }
