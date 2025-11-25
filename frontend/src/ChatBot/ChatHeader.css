@@ -1,0 +1,41 @@
+.chat-header {
+    background: linear-gradient(90deg, #6731A1 0%, #3D0BAA 100%);
+    color: white;
+    height: 80px;
+    position: relative;
+    box-sizing: border-box;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    display: block;
+}
+
+.header-title {
+    position: absolute !important;
+    top: 30px !important;
+    left: 81px !important;
+    margin: 0;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 20px;
+    text-align: left;
+}
+
+.header-action-btn {
+    position: absolute !important;
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+
+    background: white;
+    border: none;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import {QuestionIcon} from "./assets/QuestionIcon.jsx";
 import './App.css'
 import {CloseIcon} from "./assets/CloseIcon.jsx";
