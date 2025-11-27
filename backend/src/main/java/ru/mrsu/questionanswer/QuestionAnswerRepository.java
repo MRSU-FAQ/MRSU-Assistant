@@ -1,4 +1,4 @@
-package questionanswer;
+package ru.mrsu.questionanswer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,12 +1,13 @@
-package questionanswer;
+package ru.mrsu.questionanswer;
 
-import java.util.List;
-import questionanswer.dto.CreateUpdateQuestionAnswerRequestDto;
-import questionanswer.dto.QuestionAnswerResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import ru.mrsu.questionanswer.dto.CreateUpdateQuestionAnswerRequestDto;
+import ru.mrsu.questionanswer.dto.QuestionAnswerResponseDto;
 
 public interface QuestionAnswerService {
 
-  List<QuestionAnswerResponseDto> getAllQuestionAnswers();
+  Page<QuestionAnswerResponseDto> getAllQuestionAnswers(Pageable pageable);
 
   QuestionAnswerResponseDto getQuestionAnswerById(Long id);
 
