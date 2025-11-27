@@ -1,0 +1,21 @@
+.chat-header {
+    background: linear-gradient(90deg, #6731A1 0%, #3D0BAA 100%);
+    color: white;
+    height: 80px;
+    position: relative;
+    box-sizing: border-box;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    display: block;
+}
+
+.header-title {
+    position: absolute;
+    top: 30px;
+    left: 81px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+}
