@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './ChatBot.css';
-import ChatHeader from './ChatHeader';
-import MessageRenderer from './MessageRenderer';
-import ChatInput from './ChatInput';
+import ChatHeader from './ChatHeader.jsx';
+import MessageRenderer from './MessageRenderer.jsx';
+import ChatInput from './ChatInput.jsx';
 
 const ChatBot = ({ onClose }) => {
   const [messages, setMessages] = useState([
