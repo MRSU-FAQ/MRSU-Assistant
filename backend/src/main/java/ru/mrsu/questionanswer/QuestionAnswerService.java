@@ -17,5 +17,7 @@ public interface QuestionAnswerService {
   QuestionAnswerResponseDto updateQuestionAnswer(
       Long id, CreateUpdateQuestionAnswerRequestDto request);
 
+  QuestionAnswerResponseDto findBestMatchByQuestionText(String questionText);
+
   void deleteQuestionAnswer(Long id);
 }
