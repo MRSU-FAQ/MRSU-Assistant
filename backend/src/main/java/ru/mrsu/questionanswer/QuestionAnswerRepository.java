@@ -2,6 +2,8 @@ package ru.mrsu.questionanswer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface QuestionAnswerRepository extends JpaRepository<QuestionAnswer, Long> {
+import java.util.List;
 
+public interface QuestionAnswerRepository extends JpaRepository<QuestionAnswer, Long> {
+  List<QuestionAnswer> findByQuestionContainingIgnoreCase(String questionPart);
 }

@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.mrsu.questionanswer.dto.CreateUpdateQuestionAnswerRequestDto;
 import ru.mrsu.questionanswer.dto.QuestionAnswerResponseDto;
-import ru.mrsu.questionanswer.util.exception.NotFoundException;
+import ru.mrsu.util.exception.NotFoundException;
+
+import java.util.*;
 
 @Slf4j
 @Service
@@ -55,6 +57,26 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
 
     QuestionAnswer updated = repository.save(existing);
     return mapper.toResponseDto(updated);
+  }
+
+  @Override
+  public QuestionAnswerResponseDto findBestMatchByQuestionText(String questionText) {
+    String normalized = Optional.ofNullable(questionText)
+            .map(String::trim)
+            .orElse("");
+
+    if (normalized.isEmpty()) {
+        return null;
+    }
+
+    List<QuestionAnswer> matches =
+                repository.findByQuestionContainingIgnoreCase(normalized);
+
+    if (matches.isEmpty()) {
+        return null;
+    }
+
+    return mapper.toResponseDto(matches.getFirst());
   }
 
   @Override

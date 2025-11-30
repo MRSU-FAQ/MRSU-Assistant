@@ -13,7 +13,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "question_answers")
+@Table(name = "question_answer")
 @Getter
 @Setter
 @RequiredArgsConstructor
