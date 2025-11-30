@@ -1,4 +1,4 @@
-package ru.mrsu.questionanswer.util.exception;
+package ru.mrsu.util.exception;
 
 /**
  * Exception thrown when a bad request is made.

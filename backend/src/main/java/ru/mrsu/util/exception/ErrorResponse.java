@@ -1,4 +1,4 @@
-package ru.mrsu.questionanswer.util.exception;
+package ru.mrsu.util.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
