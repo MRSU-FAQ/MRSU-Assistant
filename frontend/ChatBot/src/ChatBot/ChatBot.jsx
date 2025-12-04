@@ -1,82 +1,134 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './ChatBot.css';
 import ChatHeader from './ChatHeader.jsx';
 import MessageRenderer from './MessageRenderer.jsx';
 import ChatInput from './ChatInput.jsx';
 
-const ChatBot = ({ onClose }) => {
-  const [messages, setMessages] = useState([
-    { type: 'date', text: 'сегодня' },
-    {
-      type: 'bot',
-      text: "Здравствуйте! Я ваш Академический помощник. Задайте мне вопрос об учебном процессе, и я постараюсь помочь.",
-    },
-    {
-      type: 'suggestions',
-      title: "Возможно, вас интересует:",
-      items: [
-        "Сроки подачи документов",
-        "Стоимость обучения",
-        "Требуемые экзамены"
-      ]
-    },
-    { type: 'user', text: "Сообщение пользователя" },
-  ]);
-  const [inputText, setInputText] = useState('');
+const ChatBot = ({ isOpen, onClose }) => {
+    const [messages, setMessages] = useState([
+        {
+            type: 'bot',
+            text: "Здравствуйте! Я ваш Академический помощник. Задайте мне вопрос об учебном процессе, и я постараюсь помочь.",
+        },
+        {
+            type: 'suggestions',
+            title: "Возможно, вас интересует:",
+            items: [
+                "Сроки подачи документов",
+                "Стоимость обучения",
+                "Требуемые экзамены"
+            ]
+        },
+    ]);
+    const [inputText, setInputText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = () => {
-    if (inputText.trim()) {
-      const userMsg = { type: 'user', text: inputText };
-      setMessages(prev => [...prev, userMsg]);
+    const messagesEndRef = useRef(null);
 
-      const botResponse = { type: 'bot', text: `Вы спросили: "${inputText}". Я постараюсь найти информацию по вашему запросу.` };
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, isLoading]);
 
-      setTimeout(() => {
+    const sendMessageToApi = async (userQuestion) => {
+        try {
+            const url = 'http://localhost:8080/v1/chat/ask';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    questionText: userQuestion
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Ошибка сервера:', errorText);
+                throw new Error('Ошибка сети или сервера');
+            }
+
+            const text = await response.text();
+
+            if (!text) {
+                console.warn("Сервер вернул пустой ответ");
+                return "Извините, ответа на этот вопрос нет. Обратитесь в деканат.";
+            }
+
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.error("Сервер вернул не JSON:", text, e);
+                return "Ошибка обработки данных от сервера.";
+            }
+
+            if (data.content && data.content.length > 0) {
+                return data.content[0].answer;
+            } else {
+                return "Извините, я не нашел ответа на этот вопрос.";
+            }
+
+        } catch (error) {
+            console.error("Ошибка при запросе к БД:", error);
+            return "Извините, произошла ошибка соединения.";
+        }
+    };
+
+    const handleSendMessage = async () => {
+        if (inputText.trim()) {
+            const textToSend = inputText;
+            const userMsg = { type: 'user', text: textToSend };
+
+            setMessages(prev => [...prev, userMsg]);
+            setInputText('');
+            setIsLoading(true);
+
+            const botAnswerText = await sendMessageToApi(textToSend);
+
+            const botResponse = { type: 'bot', text: botAnswerText };
+            setMessages(prev => [...prev, botResponse]);
+            setIsLoading(false);
+        }
+    };
+
+    const handleSuggestionClick = async (suggestion) => {
+        setMessages(prev => [...prev, { type: 'user', text: suggestion }]);
+        setIsLoading(true);
+
+        const botAnswerText = await sendMessageToApi(suggestion);
+
+        const botResponse = { type: 'bot', text: botAnswerText };
         setMessages(prev => [...prev, botResponse]);
-      }, 500);
+        setIsLoading(false);
+    };
 
-      setInputText('');
-    }
-  };
+    return (
+        <div className={`chat-window ${isOpen ? 'open' : ''}`}>
+            <ChatHeader onClose={onClose} />
 
-  const handleSuggestionClick = (suggestion) => {
-    setMessages(prev => [...prev, { type: 'user', text: suggestion }]);
+            <main className="chat-messages-scroll">
+                {messages.slice(1).map((msg, index) => (
+                    <MessageRenderer
+                        key={index}
+                        msg={msg}
+                        onSuggestionClick={!isLoading ? handleSuggestionClick : undefined}
+                    />
+                ))}
 
-    const botResponse = { type: 'bot', text: `По поводу "${suggestion}": это отличный вопрос, вот подробная информация по нему...` };
-    setTimeout(() => {
-      setMessages(prev => [...prev, botResponse]);
-    }, 500);
-  };
+                {isLoading && <div className="loading-indicator">Печатает...</div>}
+                <div ref={messagesEndRef} />
+            </main>
 
-  const initialDate = messages.length > 0 && messages[0].type === 'date' ? messages[0] : null;
-
-  return (
-    <div className="chat-window">
-      <ChatHeader onClose={onClose} />
-
-      {initialDate && (
-        <div className="message-date-fixed">
-          <span>{initialDate.text}</span>
+            <ChatInput
+                inputText={inputText}
+                setInputText={setInputText}
+                handleSendMessage={handleSendMessage}
+                disabled={isLoading}
+            />
         </div>
-      )}
-
-      <main className="chat-messages-scroll">
-        {messages.slice(1).map((msg, index) => (
-          <MessageRenderer
-            key={index}
-            msg={msg}
-            onSuggestionClick={handleSuggestionClick}
-          />
-        ))}
-      </main>
-
-      <ChatInput
-        inputText={inputText}
-        setInputText={setInputText}
-        handleSendMessage={handleSendMessage}
-      />
-    </div>
-  );
+    );
 };
 
 export default ChatBot;

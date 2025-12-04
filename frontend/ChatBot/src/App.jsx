@@ -8,9 +8,7 @@ function App() {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <>
-            {
-                isOpen && (<ChatBot/>)
-            }
+            <ChatBot isOpen={isOpen} onClose={() => setIsOpen(false)} />
             <div className={"widgetChat"} onClick={() => setIsOpen(!isOpen)}>
                 {isOpen ? (
                     <CloseIcon/>
