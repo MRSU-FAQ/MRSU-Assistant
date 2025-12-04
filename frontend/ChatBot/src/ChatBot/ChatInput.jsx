@@ -1,5 +1,5 @@
 import React from 'react';
-import { ForwardArrowIcon } from "../assets/ForwardArrowIcon.jsx";
+import SendIcon from "../assets/SendIcon.jsx";
 import './ChatInput.css';
 
 const ChatInput = ({ inputText, setInputText, handleSendMessage }) => {
@@ -21,7 +21,7 @@ const ChatInput = ({ inputText, setInputText, handleSendMessage }) => {
                   disabled={!inputText.trim()}
                   aria-label="Send message"
                 >
-                    <ForwardArrowIcon size={27} />
+                    <SendIcon/>
                 </button>
             </div>
         </footer>
