@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  frontend-chat:
+    build:
+      context: ./frontend/ChatBot
+      dockerfile: Dockerfile
+    container_name: mrsu-faq-chat
+    ports:
+      - "3000:80"
+
+  frontend-admin:
+    build:
+      context: ./frontend/AdminPanel
+      dockerfile: Dockerfile
+    container_name: mrsu-faq-admin
+    ports:
+      - "3001:80"
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mrsu-faq-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: mrsu_faq_db
+      POSTGRES_USER: staff
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U staff -d mrsu_faq_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
+
+networks:
+  default:
+    driver: bridge

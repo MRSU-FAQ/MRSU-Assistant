@@ -8,6 +8,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -21,7 +22,12 @@ public class SecurityConfig{
 
         // Разрешаются CORS-запросы:
         // - с любого сайта. TODO: Заменить на конкретный адрес
-        globalCorsConfiguration.addAllowedOrigin("*");
+        globalCorsConfiguration.setAllowedOriginPatterns(Arrays.asList(
+          "http://localhost:5173",           // Локальная разработка (Vite/React)
+          "http://localhost:3000",           // Локальная разработка (Vite/React)
+          "http://frontend-chat:80",         // Docker-сеть (имя сервиса фронтенда)
+          "http://frontend-admin:80"         // Docker-сеть для админки
+        ));
         // - с методами GET, POST, PUT, PATCH и DELETE
         globalCorsConfiguration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),

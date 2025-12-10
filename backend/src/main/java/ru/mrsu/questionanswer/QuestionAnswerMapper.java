@@ -9,7 +9,6 @@ import ru.mrsu.questionanswer.dto.QuestionAnswerResponseDto;
 @Mapper(componentModel = "spring")
 public interface QuestionAnswerMapper {
 
-  @Mapping(target = "id", ignore = true)
   QuestionAnswer toEntity(CreateUpdateQuestionAnswerRequestDto dto);
 
   QuestionAnswerResponseDto toResponseDto(QuestionAnswer entity);
