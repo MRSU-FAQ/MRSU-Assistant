@@ -1,5 +1,102 @@
-td {
-  border: 1px solid black;
+.questions {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+  flex: 1;
+  font-size: 14px;
+}
+
+.search-box svg {
+  color: #666;
+  margin-right: 8px;
+}
+
+.btn-add {
+  background: #6731A1;
+  color: white;
+  border: none;
+  padding: 8px 16px 8px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  transition: opacity 0.2s;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+.questions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.questions-table th,
+.questions-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.questions-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.questions-table th:nth-child(1) {
+  width: 35%;
+}
+
+.questions-table th:nth-child(2) {
+}
+
+.questions-table th:nth-child(3) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.questions-table td:nth-child(3) {
+  text-align: center;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #6731A1;
+  transition: color 0.2s;
+}
+
+.actions button:hover {
+  color: #3D0BAA;
 }
 
 .modal-overlay {
@@ -13,13 +110,103 @@ td {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(2px);
 }
 
 .modal-content {
   background-color: white;
   padding: 24px;
-  border-radius: 12px;
-  min-width: 300px;
+  border-radius: 8px;
+  min-width: 400px;
+  max-width: 500px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #6731A1;
+  box-shadow: 0 0 0 2px rgba(103, 49, 161, 0.2);
+}
+
+.formatting-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  background: #f8f9fa;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.formatting-toolbar button {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.formatting-toolbar button:hover {
+  background: #e9ecef;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-cancel {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #666;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #6731A1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-save:hover {
+  background: #3D0BAA;
 }

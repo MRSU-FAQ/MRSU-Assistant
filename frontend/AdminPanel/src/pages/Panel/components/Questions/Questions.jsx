@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pencil, Trash2, Plus } from 'lucide-react';
+import { Pencil, Trash2, Plus, Search } from 'lucide-react';
 import './Questions.css';
 
 const questionsData = [
@@ -11,11 +11,17 @@ const questionsData = [
     quest: "Когда зачёты",
     answer: "Завтра"
   }
-]
+];
 
 export default function Questions() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredQuestions = questionsData.filter(q =>
+    q.quest.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    q.answer.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleAddClick = () => {
     setCurrentQuestion(null);
@@ -32,38 +38,48 @@ export default function Questions() {
     setCurrentQuestion(null);
   };
 
+  const handleSave = () => {
+    console.log('Сохранено:', currentQuestion);
+    handleCloseModal();
+  };
+
   return (
-    <div className={"questions"}>
-      <button
-        onClick={handleAddClick}
-      >
+    <div className="questions">
+      <div className="search-box">
+        <Search size={16} />
+        <input
+          type="text"
+          placeholder="Поиск по вопросу или ответу..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      <button className="btn-add" onClick={handleAddClick}>
         <Plus size={16} /> Добавить вопрос
       </button>
 
-      <table>
+      <table className="questions-table">
         <thead>
         <tr>
-          <th>Вопросы</th>
-          <th>Ответы</th>
+          <th>Вопрос</th>
+          <th>Ответ</th>
           <th>Действия</th>
         </tr>
         </thead>
         <tbody>
-        {questionsData.map((question, index) => (
+        {filteredQuestions.map((question, index) => (
           <tr key={index}>
             <td>{question.quest}</td>
             <td>{question.answer}</td>
             <td>
-              <div>
-                <div
-                  onClick={() => handleEditClick(question)}
-                >
-                  <Pencil size={15} />
-                </div>
-
-                <div>
-                  <Trash2 size={15} />
-                </div>
+              <div className="actions">
+                <button onClick={() => handleEditClick(question)} title="Редактировать">
+                  <Pencil size={16} />
+                </button>
+                <button title="Удалить">
+                  <Trash2 size={16} />
+                </button>
               </div>
             </td>
           </tr>
@@ -76,27 +92,36 @@ export default function Questions() {
           <div className="modal-content">
             <h2>{currentQuestion ? 'Редактирование' : 'Новый вопрос'}</h2>
 
-            <div>
-              <label>Вопрос:</label> <br/>
+            <div className="form-group">
+              <label>Вопрос:</label>
               <input
                 type="text"
                 defaultValue={currentQuestion?.quest || ""}
                 placeholder="Введите текст вопроса"
+                className="form-input"
               />
             </div>
 
-            <div>
-              <label>Ответ:</label> <br/>
-              <input
-                type="text"
+            <div className="form-group">
+              <label>Ответ:</label>
+              <textarea
                 defaultValue={currentQuestion?.answer || ""}
-                placeholder="Введите текст ответа"
+                placeholder="Введите текст ответа (можно использовать жирный, курсив, списки)"
+                className="form-textarea"
+                rows="6"
               />
+              <div className="formatting-toolbar">
+                <button><strong>B</strong></button>
+                <button><em>I</em></button>
+                <button>•</button>
+                <button>→</button>
+                <button>🔗</button>
+              </div>
             </div>
 
-            <div>
-              <button onClick={handleCloseModal}>Отмена</button>
-              <button onClick={handleCloseModal}>
+            <div className="modal-actions">
+              <button className="btn-cancel" onClick={handleCloseModal}>Отмена</button>
+              <button className="btn-save" onClick={handleSave}>
                 {currentQuestion ? 'Сохранить' : 'Создать'}
               </button>
             </div>
@@ -104,5 +129,5 @@ export default function Questions() {
         </div>
       )}
     </div>
-  )
+  );
 }

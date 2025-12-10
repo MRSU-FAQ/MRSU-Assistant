@@ -1,0 +1,82 @@
+.panel {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: white;
+  border-bottom: 2px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.eios-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.btn-exit {
+  background: none;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-exit:hover {
+  background: #f0f0f0;
+  color: #333;
+  border-color: #ccc;
+}
+
+.btn-exit-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btn-exit-text {
+  font-weight: 500;
+}
+
+.panel-body {
+  padding: 40px 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: block;
+  flex-direction: column;
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 40px;
+  font-weight: 700;
+  color: #333;
+}
