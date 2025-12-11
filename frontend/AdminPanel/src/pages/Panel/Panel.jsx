@@ -1,6 +1,6 @@
 import Questions from "./components/Questions/Questions.jsx";
 import eiosIcon from '../../assets/EIOS.png';
-import './panel.css';
+import './Panel.css';
 
 export default function Panel() {
   return (

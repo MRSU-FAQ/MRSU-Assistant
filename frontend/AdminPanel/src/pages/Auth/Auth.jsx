@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import eiosIcon from '../../assets/EIOS.png';
-import './auth.css';
+import './Auth.css';
 
 export default function Auth() {
   const navigate = useNavigate();

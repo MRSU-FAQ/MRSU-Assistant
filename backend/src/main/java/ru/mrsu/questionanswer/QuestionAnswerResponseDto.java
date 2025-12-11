@@ -1,4 +1,4 @@
-package ru.mrsu.questionanswer.dto;
+package ru.mrsu.questionanswer;
 
 
 public record QuestionAnswerResponseDto (

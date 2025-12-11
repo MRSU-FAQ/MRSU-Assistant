@@ -1,4 +1,4 @@
-package ru.mrsu.questionanswer.dto;
+package ru.mrsu.questionanswer;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
