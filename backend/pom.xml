@@ -18,8 +18,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<lombok.version>1.18.34</lombok.version>
-	</properties>
+		<lombok.version>1.18.42</lombok.version>
+	    <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -58,6 +59,19 @@
 
 	<build>
 		<plugins>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>${lombok-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -98,6 +112,11 @@
 							<artifactId>lombok</artifactId>
 							<version>${lombok.version}</version>
 						</path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>

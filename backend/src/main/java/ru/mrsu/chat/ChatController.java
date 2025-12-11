@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mrsu.questionanswer.QuestionAnswerService;
-import ru.mrsu.questionanswer.dto.QuestionAnswerResponseDto;
+import ru.mrsu.questionanswer.QuestionAnswerResponseDto;
 
 @Validated
 @RestController

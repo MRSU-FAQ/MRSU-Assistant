@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mrsu.questionanswer.dto.CreateUpdateQuestionAnswerRequestDto;
-import ru.mrsu.questionanswer.dto.QuestionAnswerResponseDto;
 
 @Validated
 @RestController
@@ -35,7 +33,7 @@ public class QuestionAnswerController {
   }
 
   @GetMapping("/{id}")
-  public QuestionAnswerResponseDto getQuestionAnswerById(@PathVariable("id") Long id) {
+  public QuestionAnswerResponseDto getQuestionAnswerById(@PathVariable Long id) {
     return service.getQuestionAnswerById(id);
   }
 
@@ -47,14 +45,14 @@ public class QuestionAnswerController {
   }
 
   @PutMapping("/{id}")
-  public QuestionAnswerResponseDto updateQuestionAnswer(@PathVariable("id") Long id,
-      @RequestBody @Valid CreateUpdateQuestionAnswerRequestDto request) {
+  public QuestionAnswerResponseDto updateQuestionAnswer(@PathVariable Long id,
+                                                        @RequestBody @Valid CreateUpdateQuestionAnswerRequestDto request) {
     return service.updateQuestionAnswer(id, request);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteQuestionAnswer(@PathVariable("id") Long id) {
+  public void deleteQuestionAnswer(@PathVariable Long id) {
     service.deleteQuestionAnswer(id);
   }
 }
