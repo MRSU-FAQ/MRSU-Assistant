@@ -31,21 +31,38 @@ const ChatBot = ({ isOpen, onClose }) => {
 
     const sendMessageToApi = async (userQuestion) => {
         try {
-            const url = new URL('http://localhost:8080/v1/chat/ask');
-            url.searchParams.append('question', userQuestion);
+            const url = '/v1/chat/ask';
 
             const response = await fetch(url, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    questionText: userQuestion
+                })
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Ошибка сервера:', errorText);
                 throw new Error('Ошибка сети или сервера');
             }
 
-            const data = await response.json();
+            const text = await response.text();
+
+            if (!text) {
+                console.warn("Сервер вернул пустой ответ");
+                return "Извините, ответа на этот вопрос нет. Обратитесь в деканат.";
+            }
+
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.error("Сервер вернул не JSON:", text, e);
+                return "Ошибка обработки данных от сервера.";
+            }
 
             if (data.content && data.content.length > 0) {
                 return data.content[0].answer;
@@ -59,7 +76,12 @@ const ChatBot = ({ isOpen, onClose }) => {
         }
     };
 
-    const handleSendMessage = async () => {
+    const handleSendMessage = async (e) => {
+        // 1. Добавляем проверку события и отмену перезагрузки
+        if (e) {
+            e.preventDefault();
+        }
+
         if (inputText.trim()) {
             const textToSend = inputText;
             const userMsg = { type: 'user', text: textToSend };
@@ -68,6 +90,7 @@ const ChatBot = ({ isOpen, onClose }) => {
             setInputText('');
             setIsLoading(true);
 
+            // Здесь вызов API (он у вас написан верно)
             const botAnswerText = await sendMessageToApi(textToSend);
 
             const botResponse = { type: 'bot', text: botAnswerText };
