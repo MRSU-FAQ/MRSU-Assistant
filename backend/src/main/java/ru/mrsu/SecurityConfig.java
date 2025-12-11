@@ -25,6 +25,7 @@ public class SecurityConfig{
         globalCorsConfiguration.setAllowedOriginPatterns(Arrays.asList(
           "http://localhost:5173",           // Локальная разработка (Vite/React)
           "http://localhost:3000",           // Локальная разработка (Vite/React)
+          "http://localhost:3001",
           "http://frontend-chat:80",         // Docker-сеть (имя сервиса фронтенда)
           "http://frontend-admin:80"         // Docker-сеть для админки
         ));
