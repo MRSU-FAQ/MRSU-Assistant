@@ -31,7 +31,7 @@ const ChatBot = ({ isOpen, onClose }) => {
 
     const sendMessageToApi = async (userQuestion) => {
         try {
-            const url = '/v1/chat/ask';
+            const url = 'http://localhost:8080/v1/chat/ask';
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -58,16 +58,16 @@ const ChatBot = ({ isOpen, onClose }) => {
 
             let data;
             try {
-                data = JSON.parse(text);
+              data = JSON.parse(text);
             } catch (e) {
-                console.error("Сервер вернул не JSON:", text, e);
-                return "Ошибка обработки данных от сервера.";
+              console.error("Сервер вернул не JSON:", text, e);
+              return "Ошибка обработки данных от сервера.";
             }
 
-            if (data.content && data.content.length > 0) {
-                return data.content[0].answer;
+            if (data && data.answer) {
+              return data.answer;
             } else {
-                return "Извините, я не нашел ответа на этот вопрос.";
+              return "Извините, я не нашел ответа на этот вопрос.";
             }
 
         } catch (error) {
